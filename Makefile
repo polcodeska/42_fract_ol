@@ -15,7 +15,7 @@ OBJ		:=	$(addprefix $(OBJ_DIR), $(FILES:.c=.o))
 
 # Compiler ---------------------------------------------------------------------
 CC			:=	gcc
-DEBUG		:=	no
+DEBUG		:=	yes
 ifeq ($(DEBUG), yes)
 FLAG		:=	-g -W
 else
@@ -34,7 +34,7 @@ RESET_COLOR	:= "\033[0m"
 all: $(NAME)
 
 $(NAME): $(OBJ) $(MINILIBX)
-	@$(CC) $(OBJ) -o $@ $(MINILIBX) -lXext -lX11 -lm -lz
+	@$(CC) $(OBJ) -o $@ $(MINILIBX) -lXext -lX11 -lm
 	@echo $(SUCCESS) "FRACTOL >>> $(NAME) created" $(RESET_COLOR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
