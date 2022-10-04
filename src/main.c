@@ -89,7 +89,6 @@ int	main()
 	fct.img.addr = mlx_get_data_addr(fct.img.id, &fct.img.bits_per_pixel, \
 			&fct.img.line_len, &fct.img.is_little_endian);
 	ft_print_mandelbrot(&fct);
-	// ft_ptint_mb(&fct);
 	mlx_loop(fct.mlx);
 	return (0);
 }
