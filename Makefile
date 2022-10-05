@@ -10,7 +10,7 @@ SRC_DIR		:=	src/
 OBJ_DIR		:=	build/
 
 # Files ------------------------------------------------------------------------
-FILES	:=	main.c
+FILES	:=	main.c ft_draw.c ft_event.c
 OBJ		:=	$(addprefix $(OBJ_DIR), $(FILES:.c=.o))
 
 # Compiler ---------------------------------------------------------------------
@@ -35,12 +35,12 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(MINILIBX)
 	@$(CC) $(OBJ) -o $@ $(MINILIBX) -lXext -lX11 -lm
-	@echo $(SUCCESS) "FRACTOL >>> $(NAME) created" $(RESET_COLOR)
+	@echo $(SUCCESS) "FRACTOL [info] : $(NAME) created" $(RESET_COLOR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(FLAG) -c $< -o $@
-	@echo $(CREATE) "FRACTOL >>> $@ created" $(RESET_COLOR)
+	@echo $(CREATE) "FRACTOL [info] : $@ created" $(RESET_COLOR)
 
 $(MINILIBX):
 	@make --no-print-directory -C $(MINILIBX_DIR)
@@ -48,12 +48,12 @@ $(MINILIBX):
 # Clean up ---------------------------------------------------------------------
 clean:
 	@make --no-print-directory clean -C $(MINILIBX_DIR)
-	@rm -rf $(OBJ_DIR)
+	@rm -rfd $(OBJ_DIR)
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo $(DELETE) "FRACTOL >>> $(NAME) deleted" $(RESET_COLOR)
-	@echo $(DELETE) "FRACTOL >>> $(OBJ_DIR) deleted" $(RESET_COLOR)
+	@echo $(DELETE) "FRACTOL [info] : $(NAME) deleted" $(RESET_COLOR)
+	@echo $(DELETE) "FRACTOL [info] : $(OBJ_DIR) deleted" $(RESET_COLOR)
 
 # Recompile --------------------------------------------------------------------
 re: fclean all
