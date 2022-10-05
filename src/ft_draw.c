@@ -9,7 +9,7 @@ void	ft_put_pxl_on_canvas(t_img *img, int g_pxl_x, int g_pxl_y, int color)
 	*(unsigned int *)color_ptr = color;
 }
 
-void	ft_print_mandelbrot(t_fct *fct)
+void	ft_draw_mandelbrot(t_fct *fct)
 {
 	double	min_x = -2.0;
 	double	min_y = -1.2;

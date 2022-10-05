@@ -20,6 +20,7 @@ int	main()
 			&f.img->is_little_endian);
 	ft_draw_mandelbrot(&f);
 	mlx_key_hook(f.win, &ft_handle_keys, &f);
+	mlx_hook(f.win, 17, 0, ft_exit, &f);
 	mlx_loop(f.mlx);
 	return (0);
 }
