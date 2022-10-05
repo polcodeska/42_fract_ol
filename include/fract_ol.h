@@ -6,7 +6,7 @@
 /*   By: tmasur <tmasur@mail.de>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:08:02 by tmasur            #+#    #+#             */
-/*   Updated: 2022/10/05 09:43:26 by tmasur           ###   ########.fr       */
+/*   Updated: 2022/10/05 22:03:09 by tmasur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct	s_pxl {
 } t_pxl;
 
 typedef struct	s_img {
-	void	*addr;
+	void	*instance;
 	char	*canvas;
 	int		bits_per_pixel;
 	int		line_len;

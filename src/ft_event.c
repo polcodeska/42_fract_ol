@@ -1,17 +1,19 @@
 #include "../include/fract_ol.h"
 
-int	ft_exit(t_fct *fct)
+int	ft_exit(t_fct *f)
 {
-	mlx_destroy_image(fct->mlx, fct->img->addr);
-	mlx_destroy_window(fct->mlx, fct->win);
-	free(fct->img);
+	mlx_destroy_image(f->mlx, f->img->instance);
+	mlx_destroy_window(f->mlx, f->win);
+	mlx_destroy_display(f->mlx);
+	free(f->mlx);
+	free(f->img);
+	free(f);
 	exit(0);
 }
 
-int	ft_handle_keys(int key_pressed, t_fct *fct)
+int	ft_handle_keys(int keyup, t_fct *f)
 {
-	printf("Key: %d was pressed!\n", key_pressed);
-	if (key_pressed == 65307)
-		ft_exit(fct);
+	if (keyup == 65307)
+		ft_exit(f);
 	return (0);
 }
