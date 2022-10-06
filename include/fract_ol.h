@@ -6,7 +6,7 @@
 /*   By: tmasur <tmasur@mail.de>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:08:02 by tmasur            #+#    #+#             */
-/*   Updated: 2022/10/06 11:04:54 by tmasur           ###   ########.fr       */
+/*   Updated: 2022/10/06 12:27:32 by tmasur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,17 @@
 # include <stdio.h>
 
 typedef struct	s_graph {
-	double	min_x_on_g;
-	double	max_x_on_g;
-	double	min_y_on_g;
-	double	max_y_on_g;
-	double	x_on_g;
-	double	y_on_g;
-	double	x_weight_on_g;
-	double	y_weight_on_g;
-	int		is_point_in_set;
-	int		max_iteration;
+	double	min_x;
+	double	max_x;
+	double	min_y;
+	double	max_y;
+	double	x;
+	double	y;
+	double	x_weight;
+	double	y_weight;
 	int		iter_count;
+	int		max_iteration;
 	int		color[20];
-	int		x_on_img;
-	int		y_on_img;
 } t_graph;
 
 typedef struct	s_img {
@@ -50,11 +47,13 @@ typedef struct	s_fct {
 	void		*mlx;
 	void		*win;
 	t_img		*img;
+	t_graph		*g;
 } t_fct;
 
 // ft_draw.c
 void	ft_put_pxl_on_canvas(t_img *img, int pxl_x, int pxl_y, int color);
-void	ft_draw_mandelbrot(t_fct *fct);
+void	ft_mandelset(t_fct *f);
+void	ft_draw_fract(t_fct *f, void (*ft_fractset)(t_fct *));
 
 // ft_events.c
 int		ft_exit(t_fct *fct);

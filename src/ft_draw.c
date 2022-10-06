@@ -1,88 +1,89 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_draw.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmasur <tmasur@mail.de>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/06 12:41:33 by tmasur            #+#    #+#             */
+/*   Updated: 2022/10/06 12:45:17 by tmasur           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/fract_ol.h"
 
 void	ft_put_pxl_on_canvas(t_img *img, int g_pxl_x, int g_pxl_y, int color)
 {
 	char	*color_ptr;
 
-	color_ptr = img->canvas + (g_pxl_y * img->line_len + g_pxl_x *
+	color_ptr = img->canvas + (g_pxl_y * img->line_len + g_pxl_x * \
 			(img->bits_per_pixel / 8));
 	*(unsigned int *)color_ptr = color;
 }
 
-void	ft_draw_mandelbrot(t_fct *fct)
+void	ft_set_graph(t_fct *f)
 {
-	double	min_x = -2.0;
-	double	min_y = -1.2;
-	double	max_x = 1.0;
-	double	max_y = 1.2;
-	double	g_point[2];
-	double	x_factor = (max_x - min_x) / (WIN_WIDTH - 1);
-	double	y_factor = (max_y - min_y) / (WIN_HEIGHT - 120 - 1);
-	double	z;
-	double	x_n;
-	double	x_n_old;
-	double	y_n;
-	int		is_in_set;
-	int		pxl_x;
-	int		pxl_y;
-	int		g_offset;
-	int		i;
-	int		max_iteration;
+	f->g->min_x = -2.0;
+	f->g->min_y = -1.2;
+	f->g->max_x = 1.0;
+	f->g->max_y = 1.2;
+	f->g->x_weight = (f->g->max_x - f->g->min_x) / (WIN_WIDTH - 1);
+	f->g->y_weight = (f->g->max_y - f->g->min_y) / (WIN_HEIGHT - 1);
+	f->g->max_iteration = 30;
+}
 
-	pxl_x = 0;
-	g_offset = 50;
-	max_iteration = 30;
-	while (pxl_x < WIN_WIDTH)
+void	ft_mandelset(t_fct *f)
+{
+	double	z;
+	double	x_on_g;
+	double	y_on_g;
+	double	x_on_g_tmp;
+
+	x_on_g = f->g->x;
+	y_on_g = f->g->y;
+	while (f->g->iter_count < f->g->max_iteration)
 	{
-		g_point[0] = min_x + (pxl_x * x_factor);
-		pxl_y = 0;
-		while (pxl_y < (WIN_HEIGHT - 120))
-		{
-			g_point[1] = max_y - (pxl_y * y_factor);
-			is_in_set = 1;
-			i = 0;
-			x_n = g_point[0];
-			y_n = g_point[1];
-			while (i < max_iteration)
-			{
-				z = sqrt(x_n * x_n + y_n *y_n);
-				if (z > 2)
-				{
-					is_in_set = 0;
-					break;
-				}
-				x_n_old = x_n;
-				x_n = x_n * x_n - y_n * y_n + g_point[0];
-				y_n = 2 * x_n_old * y_n + g_point[1];
-				i++;
-			}
-//			if (is_in_set)
-//				ft_mlx_pixel_put(&fct->img, pxl_x+g_offset, pxl_y+60, 0x000000);
-//			else if (i > 10)
-//				ft_mlx_pixel_put(&fct->img, pxl_x+g_offset, pxl_y+60, 0x00FF00);
-//			else if (i > 8)
-//				ft_mlx_pixel_put(&fct->img, pxl_x+g_offset, pxl_y+60, 0x00FFFF);
-//			else if (i > 6)
-//				ft_mlx_pixel_put(&fct->img, pxl_x+g_offset, pxl_y+60, 0xFF00FF);
-//			else if (i > 4)
-//				ft_mlx_pixel_put(&fct->img, pxl_x+g_offset, pxl_y+60, 0xFFFFFF);
-//			else if (i > 2)
-//				ft_mlx_pixel_put(&fct->img, pxl_x+g_offset, pxl_y+60, 0xFFFF00);
-			if (is_in_set)
-				ft_put_pxl_on_canvas(fct->img, WIN_HEIGHT - pxl_y, WIN_WIDTH - pxl_x, 0x000000);
-			else if (i > 10)
-				ft_put_pxl_on_canvas(fct->img, WIN_HEIGHT - pxl_y, WIN_WIDTH - pxl_x, 0x00FF00);
-			else if (i > 8)
-				ft_put_pxl_on_canvas(fct->img, WIN_HEIGHT - pxl_y, WIN_WIDTH - pxl_x, 0x00FFFF);
-			else if (i > 6)
-				ft_put_pxl_on_canvas(fct->img, WIN_HEIGHT - pxl_y, WIN_WIDTH - pxl_x, 0xFF00FF);
-			else if (i > 4)
-				ft_put_pxl_on_canvas(fct->img, WIN_HEIGHT - pxl_y, WIN_WIDTH - pxl_x, 0xFFFFFF);
-			else if (i > 2)
-				ft_put_pxl_on_canvas(fct->img, WIN_HEIGHT - pxl_y, WIN_WIDTH - pxl_x, 0xFFFF00);
-			pxl_y++;
-		}
-		pxl_x++;
+		z = x_on_g * x_on_g + y_on_g * y_on_g;
+		if (z > 4)
+			break ;
+		x_on_g_tmp = x_on_g;
+		x_on_g = x_on_g * x_on_g - y_on_g * y_on_g + f->g->x;
+		y_on_g = 2 * x_on_g_tmp * y_on_g + f->g->y;
+		f->g->iter_count++;
 	}
-	mlx_put_image_to_window(fct->mlx, fct->win, fct->img->instance, 0, 0);
+}
+
+void	ft_juliaset(t_fct *f)
+{
+	// TODO: Code here
+	;
+}
+
+void	ft_draw_fract(t_fct *f, void (*ft_fractset)(t_fct *))
+{
+	int		x;
+	int		y;
+
+	ft_set_graph(f);
+	x = 0;
+	while (x < WIN_WIDTH)
+	{
+		f->g->x = f->g->min_x + (x * f->g->x_weight);
+		y = 0;
+		while (y < (WIN_HEIGHT))
+		{
+			f->g->y = f->g->max_y - (y * f->g->y_weight);
+			f->g->iter_count = 0;
+			ft_fractset(f);
+			if (f->g->iter_count >= 30)
+				ft_put_pxl_on_canvas(f->img, x, y, 0x000000);
+			else if (f->g->iter_count > 8)
+				ft_put_pxl_on_canvas(f->img, x, y, 0x00FFFF);
+			else if (f->g->iter_count > 6)
+				ft_put_pxl_on_canvas(f->img, x, y, 0xFF00FF);
+			y++;
+		}
+		x++;
+	}
+	mlx_put_image_to_window(f->mlx, f->win, f->img->instance, 0, 0);
 }
