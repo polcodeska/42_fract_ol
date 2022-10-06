@@ -6,7 +6,7 @@
 /*   By: tmasur <tmasur@mail.de>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:44:08 by tmasur            #+#    #+#             */
-/*   Updated: 2022/10/06 12:44:10 by tmasur           ###   ########.fr       */
+/*   Updated: 2022/10/06 15:22:35 by tmasur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,17 @@ int	ft_exit(t_fct *f)
 	exit(0);
 }
 
-int	ft_handle_keys(int keyup, t_fct *f)
+int	ft_handle_keys(int key, t_fct *f)
 {
-	if (keyup == 65307)
+	if (key == 65307)
 		ft_exit(f);
+	if (key == 99)
+	{
+		ft_clear_canvas(f);
+		mlx_mouse_get_pos(f->mlx, f->win, &f->g->x_img, &f->g->y_img);
+		f->g->x_julia = f->g->min_x + (f->g->x_img * f->g->x_weight);
+		f->g->y_julia = f->g->max_y - (f->g->y_img * f->g->y_weight);
+		ft_draw_fract(f, ft_juliaset);
+	}
 	return (0);
 }
