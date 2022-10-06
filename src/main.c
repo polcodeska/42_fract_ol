@@ -17,7 +17,7 @@ int	main()
 	f->img->canvas = mlx_get_data_addr(f->img->instance,
 			&f->img->bits_per_pixel, &f->img->line_len,
 			&f->img->is_little_endian);
-	mlx_hook(f->win, 17, 0, ft_exit, &f);
+	mlx_hook(f->win, 17, 0, ft_exit, f);
 	mlx_hook(f->win, 2, 1, ft_handle_keys, f);
 	ft_draw_mandelbrot(f);
 	mlx_loop(f->mlx);

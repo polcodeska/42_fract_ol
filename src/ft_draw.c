@@ -84,5 +84,5 @@ void	ft_draw_mandelbrot(t_fct *fct)
 		}
 		pxl_x++;
 	}
-	mlx_put_image_to_window(fct->mlx, fct->win, fct->img->addr, 0, 0);
+	mlx_put_image_to_window(fct->mlx, fct->win, fct->img->instance, 0, 0);
 }
