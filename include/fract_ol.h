@@ -6,7 +6,7 @@
 /*   By: tmasur <tmasur@mail.de>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:08:02 by tmasur            #+#    #+#             */
-/*   Updated: 2022/10/05 22:03:09 by tmasur           ###   ########.fr       */
+/*   Updated: 2022/10/06 11:04:54 by tmasur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,22 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-typedef struct	s_pxl {
-	double	g_min_x;
-	double	g_max_x;
-	double	g_min_y;
-	double	g_max_y;
-} t_pxl;
+typedef struct	s_graph {
+	double	min_x_on_g;
+	double	max_x_on_g;
+	double	min_y_on_g;
+	double	max_y_on_g;
+	double	x_on_g;
+	double	y_on_g;
+	double	x_weight_on_g;
+	double	y_weight_on_g;
+	int		is_point_in_set;
+	int		max_iteration;
+	int		iter_count;
+	int		color[20];
+	int		x_on_img;
+	int		y_on_img;
+} t_graph;
 
 typedef struct	s_img {
 	void	*instance;
