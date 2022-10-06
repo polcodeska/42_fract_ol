@@ -6,7 +6,7 @@
 /*   By: tmasur <tmasur@mail.de>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:40:04 by tmasur            #+#    #+#             */
-/*   Updated: 2022/10/06 15:25:11 by tmasur           ###   ########.fr       */
+/*   Updated: 2022/10/06 20:17:07 by tmasur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int	main(void)
 		return (1);
 	mlx_hook(f->win, 17, 0, ft_exit, f);
 	mlx_hook(f->win, 2, 1L << 0, ft_handle_keys, f);
-	f->g->x_julia = 0.353;
-	f->g->y_julia = 0.288;
-	ft_draw_fract(f, ft_juliaset);
+	//f->g->x_julia = 0.353;
+	//f->g->y_julia = 0.288;
+	//ft_draw_fract(f, ft_juliaset);
+	ft_draw_fract(f, ft_mandelset);
 	mlx_loop(f->mlx);
 	return (0);
 }

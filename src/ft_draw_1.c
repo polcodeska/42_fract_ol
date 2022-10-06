@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_draw.c                                          :+:      :+:    :+:   */
+/*   ft_draw_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmasur <tmasur@mail.de>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:41:33 by tmasur            #+#    #+#             */
-/*   Updated: 2022/10/06 15:29:13 by tmasur           ###   ########.fr       */
+/*   Updated: 2022/10/06 20:15:47 by tmasur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ void	ft_set_graph(t_fct *f)
 {
 	f->g->min_x = -2.0;
 	f->g->min_y = -1.2;
-	f->g->max_x = 1.0;
+	f->g->max_x = 2.0;
 	f->g->max_y = 1.2;
 	f->g->x_weight = (f->g->max_x - f->g->min_x) / (WIN_WIDTH - 1);
 	f->g->y_weight = (f->g->max_y - f->g->min_y) / (WIN_HEIGHT - 1);
 	f->g->max_iteration = 30;
 	f->g->x_img = 0;
+	ft_set_colors(f);
 }
 
 void	ft_mandelset(t_fct *f)
@@ -75,21 +76,6 @@ void	ft_juliaset(t_fct *f)
 	}
 }
 
-void	ft_clear_canvas(t_fct *f)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	while (x < WIN_WIDTH)
-	{
-		y = 0;
-		while (y < WIN_HEIGHT)
-			ft_put_pxl_on_canvas(f->img, x, y++, 0x000000);
-		x++;
-	}
-}
-
 void	ft_draw_fract(t_fct *f, void (*ft_fractset)(t_fct *))
 {
 	ft_set_graph(f);
@@ -102,18 +88,7 @@ void	ft_draw_fract(t_fct *f, void (*ft_fractset)(t_fct *))
 			f->g->y_fract = f->g->max_y - (f->g->y_img * f->g->y_weight);
 			f->g->iter_count = 0;
 			ft_fractset(f);
-			if (f->g->iter_count >= 30)
-				ft_put_pxl_on_canvas(f->img, f->g->x_img, f->g->y_img, \
-						0x000000);
-			else if (f->g->iter_count >= 14)
-				ft_put_pxl_on_canvas(f->img, f->g->x_img, f->g->y_img, \
-						0x0000FF);
-			else if (f->g->iter_count > 8)
-				ft_put_pxl_on_canvas(f->img, f->g->x_img, f->g->y_img, \
-						0x00FFFF);
-			else if (f->g->iter_count > 6)
-				ft_put_pxl_on_canvas(f->img, f->g->x_img, f->g->y_img, \
-						0xFF00FF);
+			ft_coloring_the_canvas(f);
 			f->g->y_img++;
 		}
 		f->g->x_img++;

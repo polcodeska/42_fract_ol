@@ -6,7 +6,7 @@
 /*   By: tmasur <tmasur@mail.de>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:08:02 by tmasur            #+#    #+#             */
-/*   Updated: 2022/10/06 15:21:40 by tmasur           ###   ########.fr       */
+/*   Updated: 2022/10/06 16:40:30 by tmasur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ void	ft_put_pxl_on_canvas(t_img *img, int pxl_x, int pxl_y, int color);
 void	ft_mandelset(t_fct *f);
 void	ft_juliaset(t_fct *f);
 void	ft_draw_fract(t_fct *f, void (*ft_fractset)(t_fct *));
+
+// ft_draw_2.c
 void	ft_clear_canvas(t_fct *f);
+void	ft_set_colors(t_fct *f);
+void	ft_coloring_the_canvas(t_fct *f);
 
 // ft_events.c
 int		ft_exit(t_fct *f);

@@ -10,7 +10,7 @@ SRC_DIR		:=	src/
 OBJ_DIR		:=	build/
 
 # Files ------------------------------------------------------------------------
-FILES	:=	main.c ft_draw.c ft_event.c
+FILES	:=	main.c ft_draw_1.c ft_draw_2.c ft_event.c
 OBJ		:=	$(addprefix $(OBJ_DIR), $(FILES:.c=.o))
 
 # Compiler ---------------------------------------------------------------------
