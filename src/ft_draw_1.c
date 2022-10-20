@@ -6,7 +6,7 @@
 /*   By: tmasur <tmasur@mail.de>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:41:33 by tmasur            #+#    #+#             */
-/*   Updated: 2022/10/06 20:15:47 by tmasur           ###   ########.fr       */
+/*   Updated: 2022/10/20 20:01:20 by tmasur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,77 +21,50 @@ void	ft_put_pxl_on_canvas(t_img *img, int g_pxl_x, int g_pxl_y, int color)
 	*(unsigned int *)color_ptr = color;
 }
 
-void	ft_set_graph(t_fct *f)
+void	ft_mandelset(t_fct *f, int x, int y)
 {
-	f->g->min_x = -2.0;
-	f->g->min_y = -1.2;
-	f->g->max_x = 2.0;
-	f->g->max_y = 1.2;
-	f->g->x_weight = (f->g->max_x - f->g->min_x) / (WIN_WIDTH - 1);
-	f->g->y_weight = (f->g->max_y - f->g->min_y) / (WIN_HEIGHT - 1);
-	f->g->max_iteration = 30;
-	f->g->x_img = 0;
-	ft_set_colors(f);
-}
+	double	x_percentage;
+	double	y_percentage;
+	double	c_real;
+	double	c_im;
+	double	z_real;
+	double	z_im;
+	double	z_real_tmp;
+	int		iter_count;
 
-void	ft_mandelset(t_fct *f)
-{
-	double	z;
-	double	x_on_g;
-	double	y_on_g;
-	double	x_on_g_tmp;
-
-	x_on_g = f->g->x_fract;
-	y_on_g = f->g->y_fract;
-	while (f->g->iter_count < f->g->max_iteration)
+	x_percentage = (double)x / (double)WIN_WIDTH;
+	y_percentage = (double)y / (double)WIN_HEIGHT;
+	c_real = x_percentage * f->g->range_real + f->g->mid_real - \
+			 f->g->range_real / 2;
+	c_im = y_percentage * f->g->range_im + f->g->mid_im - f->g->range_im / 2;
+	z_real = 0;
+	z_im = 0;
+	iter_count = 0;
+	while (iter_count < f->g->max_iter && (z_real * z_real + z_im * z_im) <= 4)
 	{
-		z = x_on_g * x_on_g + y_on_g * y_on_g;
-		if (z > 4)
-			break ;
-		x_on_g_tmp = x_on_g;
-		x_on_g = x_on_g * x_on_g - y_on_g * y_on_g + f->g->x_fract;
-		y_on_g = 2 * x_on_g_tmp * y_on_g + f->g->y_fract;
-		f->g->iter_count++;
+		z_real_tmp = z_real * z_real - z_im * z_im + c_real;
+		z_im = 2 * z_real * z_im + c_im;
+		z_real = z_real_tmp;
+		iter_count++;
 	}
+	ft_coloring_the_canvas(f, iter_count, x, y);
 }
 
-void	ft_juliaset(t_fct *f)
+void	ft_draw(t_fct *f)
 {
-	double	z;
-	double	x_on_g;
-	double	y_on_g;
-	double	x_on_g_tmp;
+	int	x;
+	int	y;
 
-	x_on_g = f->g->x_fract;
-	y_on_g = f->g->y_fract;
-	while (f->g->iter_count < f->g->max_iteration)
+	x = 0;
+	while (x < WIN_WIDTH)
 	{
-		z = x_on_g * x_on_g + y_on_g * y_on_g;
-		if (z > 4)
-			break ;
-		x_on_g_tmp = x_on_g;
-		x_on_g = x_on_g * x_on_g - y_on_g * y_on_g + f->g->x_julia;
-		y_on_g = 2 * x_on_g_tmp * y_on_g + f->g->y_julia;
-		f->g->iter_count++;
-	}
-}
-
-void	ft_draw_fract(t_fct *f, void (*ft_fractset)(t_fct *))
-{
-	ft_set_graph(f);
-	while (f->g->x_img < WIN_WIDTH)
-	{
-		f->g->x_fract = f->g->min_x + (f->g->x_img * f->g->x_weight);
-		f->g->y_img = 0;
-		while (f->g->y_img < (WIN_HEIGHT))
+		y = 0;
+		while (y < WIN_HEIGHT)
 		{
-			f->g->y_fract = f->g->max_y - (f->g->y_img * f->g->y_weight);
-			f->g->iter_count = 0;
-			ft_fractset(f);
-			ft_coloring_the_canvas(f);
-			f->g->y_img++;
+			ft_mandelset(f, x, y);
+			y++;
 		}
-		f->g->x_img++;
+		x++;
 	}
 	mlx_put_image_to_window(f->mlx, f->win, f->img->instance, 0, 0);
 }
