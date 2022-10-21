@@ -3,9 +3,11 @@
 #===============================================================================
 NAME		:=	fractol
 MINILIBX	?=	$(MINILIBX_DIR)libmlx_Linux.a
+LIBFT   ?=  $(LIBFT_DIR)libft.a
 
 # Directories ------------------------------------------------------------------
 MINILIBX_DIR:=	lib/minilibx-linux/
+LIBFT_DIR   :=  lib/libft/
 SRC_DIR		:=	src/
 OBJ_DIR		:=	build/
 
@@ -15,7 +17,7 @@ OBJ		:=	$(addprefix $(OBJ_DIR), $(FILES:.c=.o))
 
 # Compiler ---------------------------------------------------------------------
 CC			:=	gcc
-DEBUG		:=	yes
+DEBUG		:=	no
 ifeq ($(DEBUG), yes)
 FLAG		:=	-g -W
 else
@@ -33,27 +35,32 @@ RESET_COLOR	:= "\033[0m"
 #===============================================================================
 all: $(NAME)
 
-$(NAME): $(OBJ) $(MINILIBX)
-	@$(CC) $(OBJ) -o $@ $(MINILIBX) -lXext -lX11 -lm
-	@echo $(SUCCESS) "FRACTOL [info] : $(NAME) created" $(RESET_COLOR)
+$(NAME): $(OBJ) $(MINILIBX) $(LIBFT)
+	@$(CC) $(OBJ) -o $@ $(MINILIBX) $(LIBFT) -lXext -lX11
+	@echo $(SUCCESS) "FRACTOL [create] : $(NAME)" $(RESET_COLOR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(FLAG) -c $< -o $@
-	@echo $(CREATE) "FRACTOL [info] : $@ created" $(RESET_COLOR)
+	@echo $(CREATE) "FRACTOL [create] : $@" $(RESET_COLOR)
 
 $(MINILIBX):
 	@make --no-print-directory -C $(MINILIBX_DIR)
 
+$(LIBFT):
+	@make --no-print-directory -C $(LIBFT_DIR)
+
 # Clean up ---------------------------------------------------------------------
 clean:
 	@make --no-print-directory clean -C $(MINILIBX_DIR)
+	@make --no-print-directory clean -C $(LIBFT_DIR)
 	@rm -rfd $(OBJ_DIR)
 
 fclean: clean
+	@make --no-print-directory fclean -C $(LIBFT_DIR)
 	@rm -f $(NAME)
-	@echo $(DELETE) "FRACTOL [info] : $(NAME) deleted" $(RESET_COLOR)
-	@echo $(DELETE) "FRACTOL [info] : $(OBJ_DIR) deleted" $(RESET_COLOR)
+	@echo $(DELETE) "FRACTOL [delete] : $(NAME)" $(RESET_COLOR)
+	@echo $(DELETE) "FRACTOL [delete] : $(OBJ_DIR)*" $(RESET_COLOR)
 
 # Recompile --------------------------------------------------------------------
 re: fclean all

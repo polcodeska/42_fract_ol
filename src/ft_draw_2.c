@@ -18,15 +18,15 @@ int	ft_get_color(int iter_count)
 	unsigned char	g;
 	unsigned char	b;
 
-	r = (unsigned char)((iter_count * iter_count * 23) % 255);
-	g = (unsigned char)25;
-	b = (unsigned char)25;
+	r = (unsigned char)((iter_count * iter_count * 22) % 255);
+	g = (unsigned char)(iter_count * iter_count * iter_count * 33) % 255;
+	b = (unsigned char)iter_count * 77 % 255;
 	return (r << 16 | g << 8 | b);
 }
 
-void	ft_coloring_the_canvas(t_fct *f, int iter_count, int x, int y)
+void	ft_coloring_px_on_canvas(t_fct *f, int iter_count, int x, int y)
 {
-	if (iter_count >= f->g->max_iter - 1)
+	if (iter_count >= f->g->max_iter / 2)
 		ft_put_pxl_on_canvas(f->img, x, y, \
 				0x000000);
 	else
