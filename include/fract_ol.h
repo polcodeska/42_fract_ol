@@ -16,10 +16,21 @@
 # define WIN_WIDTH 720
 # define JULIA 0
 # define MANDELBROT 1
+# define MOUSE_LEFT 1
+# define MOUSE_SCROLL_UP 4
+# define MOUSE_SCROLL_DOWN 5
+# define WIN_CROSS_CLOSE 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_PLUS 43
+# define KEY_MINUS 45
 
 # include "../lib/minilibx-linux/mlx.h"
 # include "../lib/libft/include/libft.h"
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef struct s_graph {
 	double	range_real;

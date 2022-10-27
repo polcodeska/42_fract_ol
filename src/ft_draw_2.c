@@ -18,9 +18,9 @@ int	ft_get_color(int iter_count)
 	unsigned char	g;
 	unsigned char	b;
 
-	r = (unsigned char)((iter_count * iter_count * 22) % 255);
-	g = (unsigned char)(iter_count * iter_count * iter_count * 33) % 255;
-	b = (unsigned char)iter_count * 77 % 255;
+	r = (unsigned char)((iter_count * iter_count * 22) % 32 * 32);
+	g = (unsigned char)(iter_count * iter_count * iter_count * 33) % 32 * 32;
+	b = (unsigned char)iter_count * 77 % 32 * 32;
 	return (r << 16 | g << 8 | b);
 }
 

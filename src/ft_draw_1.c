@@ -6,7 +6,7 @@
 /*   By: tmasur <tmasur@mail.de>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:41:33 by tmasur            #+#    #+#             */
-/*   Updated: 2022/10/20 20:01:20 by tmasur           ###   ########.fr       */
+/*   Updated: 2022/10/27 15:32:03 by tmasur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_mandelbrot(t_fct *f, int x, int y)
 		f->g->range_real / 2;
 	f->g->c_im = y_percentage * f->g->range_im + f->g->mid_im - \
 		f->g->range_im / 2;
+	f->g->c_im = -f->g->c_im;
 	z_real = 0;
 	z_im = 0;
 	f->g->iter_count = 0;
@@ -60,6 +61,7 @@ void	ft_julia(t_fct *f, int x, int y)
 		f->g->mid_real - f->g->range_real / 2;
 	z_im = (double)y / (double)WIN_HEIGHT * f->g->range_im + \
 		f->g->mid_im - f->g->range_im / 2;
+	z_im = -z_im;
 	iter_count = 0;
 	while (iter_count < f->g->max_iter && (z_real * z_real + z_im * z_im) <= 4)
 	{
