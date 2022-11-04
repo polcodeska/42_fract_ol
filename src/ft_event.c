@@ -49,7 +49,7 @@ int	ft_handle_mouse(int btn, int x, int y, t_fct *f)
 
 int	ft_handle_keys(int key, t_fct *f)
 {
-	if (key == WIN_CROSS_CLOSE)
+	if (key == WIN_ESC)
 		ft_exit(f);
 	if (key == KEY_MINUS)
 		f->g->max_iter *= 0.9;
